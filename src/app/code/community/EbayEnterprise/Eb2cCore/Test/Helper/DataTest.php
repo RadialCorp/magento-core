@@ -291,65 +291,6 @@ class EbayEnterprise_Eb2cCore_Test_Helper_DataTest extends EbayEnterprise_Eb2cCo
         $this->assertSame($expect, Mage::helper('eb2ccore')->parseBool($s));
     }
     /**
-     * Testing that the method EbayEnterprise_Eb2cCore_Helper_Data::extractXmlToArray
-     * when called passed in a DOMNode, an array of callback mapping and a DOMXPath
-     * it will extract the data using callbacks and return an array of extracted data.
-     */
-    public function testExtractXmlToArray()
-    {
-        $apiXmlNs = 'http://api.gsicommerce.com/schema/checkout/1.0';
-        $sku = '45-HTCT60';
-        $qty = 4;
-        $xml = '
-			<root xmlns="' . $apiXmlNs . '">
-				<Order>
-					<OrderItems>
-						<OrderItem id="12112">
-							<ItemId>' . $sku . '</ItemId>
-							<Quantity>' . $qty . '</Quantity>
-							<Name>Will not be exracted out</Name>
-						</OrderItem>
-					</OrderItems>
-				</Order>
-			</root>
-		';
-        $helper = Mage::helper('eb2ccore');
-        $doc = $helper->getNewDomDocument();
-        $doc->loadXML($xml);
-        $xpath = $helper->getNewDomXPath($doc);
-        $xpath->registerNamespace('a', $apiXmlNs);
-        $nodes = $doc->documentElement;
-        $mapping = array(
-            'sku' => array(
-                'class' => 'ebayenterprise_catalog/map',
-                'type' => 'helper',
-                'method' => 'extractStringValue',
-                'xpath' => 'a:Order/a:OrderItems/a:OrderItem/a:ItemId',
-            ),
-            'qty_ordered' => array(
-                'class' => 'ebayenterprise_catalog/map',
-                'type' => 'helper',
-                'method' => 'extractIntValue',
-                'xpath' => 'a:Order/a:OrderItems/a:OrderItem/a:Quantity',
-            ),
-            // Proving that any map field with a 'disabled' type will not be extracted
-            'name' => array(
-                'class' => 'ebayenterprise_catalog/map',
-                'type' => 'disabled',
-                'method' => 'extractStringValue',
-                'xpath' => 'a:Order/a:OrderItems/a:OrderItem/a:Name',
-            ),
-        );
-
-        $expectData = array('sku' => $sku, 'qty_ordered' => $qty);
-
-        $this->assertSame($expectData, Mage::helper('eb2ccore')->extractXmlToArray(
-            $nodes,
-            $mapping,
-            $xpath
-        ));
-    }
-    /**
      * Provide test strings to convert from camelCase to underscores
      * @return array Args array of strings to convert
      */
