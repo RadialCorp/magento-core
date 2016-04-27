@@ -4,10 +4,10 @@
     "license": "OSL-3.0",
     "authors": [
         { "name": "Aaron Anderson", "email": "andersona@radial.com", "role": "Developer" },
-	{ "name": "Steve Kasperson", "email": "kaspersons@radial.com", "role": "Developer" },
-	{ "name": "Robert Krule", "email": "rkrule@radial.com", "role": "Developer" },
-	{ "name": "Marc Pereira", "email": "mapereira@radial.com", "role": "Developer" },
-	{ "name": "Ryan Tulino", "email": "rtulino@radial.com", "role": "Developer" }
+        { "name": "Steve Kasperson", "email": "kaspersons@radial.com", "role": "Developer" },
+        { "name": "Robert Krule", "email": "rkrule@radial.com", "role": "Developer" },
+        { "name": "Marc Pereira", "email": "mapereira@radial.com", "role": "Developer" },
+        { "name": "Ryan Tulino", "email": "rtulino@radial.com", "role": "Developer" }
     ],
     "type": "magento-module",
     "require": {
