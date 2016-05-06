@@ -13,8 +13,8 @@
     "require": {
         "php": ">=5.4.0",
         "ext-bcmath": "*",
-        "radial/magento-log": ">=2.0.2,<3.0",
-        "ebayenterprise/php-dom": "~1.0",
+        "radial/magento-log": "~2.0",
+        "radial/php-dom": "~1.0",
         "radial/retail-order-management": "^1.5",
         "firegento/psr0autoloader": "*",
         "psr/log" : "~1.0"
