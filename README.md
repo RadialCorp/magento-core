@@ -1,6 +1,9 @@
 ![radial logo](/docs/static/logo-vert.jpeg)
 
 **TDF, Payments, Risk / Fraud Management**
+
+[![Build Status](https://circleci.com/gh/RadialCorp/magento-core.svg?style=shield&circle-token=f46766b92a46401226eee8b1e66a8c403d52d1c3)](https://circleci.com/gh/RadialCorp/magento-core)
+
 # Core Module
 
 The intended audience for this guide is Magento merchants, business users and system integrators.
