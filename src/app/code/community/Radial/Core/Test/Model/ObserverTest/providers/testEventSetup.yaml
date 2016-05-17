@@ -1,0 +1,10 @@
+-
+    - global
+    - sales_quote_collect_totals_after
+    - radial_core/observer
+    - handleSalesQuoteCollectTotalsAfter
+-
+    - global
+    - salesrule_validator_process
+    - radial_core/observer
+    - handleSalesRuleValidatorProcess

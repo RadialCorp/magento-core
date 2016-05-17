@@ -1,0 +1,5 @@
+config:
+  default/radial_core/feed/filetransfer_sftp_username: "test"
+  default/radial_core/feed/filetransfer_sftp_auth_type: "pub_key"
+  default/radial_core/feed/filetransfer_sftp_ssh_pub_key: "key"
+  default/radial_core/feed/filetransfer_sftp_ssh_prv_key: "key"

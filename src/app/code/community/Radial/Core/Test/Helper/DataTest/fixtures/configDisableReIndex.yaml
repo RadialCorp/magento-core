@@ -1,0 +1,2 @@
+config:
+  default/radial_core/feed/enabled_reindex: 0

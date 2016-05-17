@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright (c) 2013-2014 eBay Enterprise, Inc.
+
+NOTICE OF LICENSE
+
+This source file is subject to the Open Software License (OSL 3.0)
+that is bundled with this package in the file LICENSE.md.
+It is also available through the world-wide-web at this URL:
+http://opensource.org/licenses/osl-3.0.php
+
+@copyright   Copyright (c) 2013-2014 eBay Enterprise, Inc. (http://www.ebayenterprise.com/)
+@license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+-->
+<config>
+    <modules>
+        <Radial_Amqp>
+            <version>1.4.0</version>
+        </Radial_Amqp>
+    </modules>
+    <global>
+        <models>
+            <radial_amqp>
+                <class>Radial_Amqp_Model</class>
+            </radial_amqp>
+        </models>
+        <helpers>
+            <radial_amqp>
+                <class>Radial_Amqp_Helper</class>
+            </radial_amqp>
+        </helpers>
+        <blocks>
+            <radial_amqp>
+                <class>Radial_Amqp_Block</class>
+            </radial_amqp>
+        </blocks>
+        <events>
+            <radial_amqp_message_test>
+                <observers>
+                    <radial_amqp_test_message_handler>
+                        <class>radial_amqp/observer</class>
+                        <method>processTestMessage</method>
+                    </radial_amqp_test_message_handler>
+                </observers>
+            </radial_amqp_message_test>
+        </events>
+    </global>
+    <crontab>
+        <jobs>
+            <radial_amqp_runner_process_queues>
+                <run>
+                    <model>radial_amqp/runner::processQueues</model>
+                </run>
+                <schedule>
+                    <cron_expr>* * * * *</cron_expr>
+                </schedule>
+            </radial_amqp_runner_process_queues>
+        </jobs>
+    </crontab>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Radial_Amqp after="Mage_Adminhtml">Radial_Amqp</Radial_Amqp>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+    <adminhtml>
+        <layout>
+            <updates>
+                <radial_amqp>
+                    <file>radial_amqp.xml</file>
+                </radial_amqp>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <Radial_Amqp>
+                    <files>
+                        <default>Radial_Amqp.csv</default>
+                    </files>
+                </Radial_Amqp>
+            </modules>
+        </translate>
+    </adminhtml>
+    <default>
+        <radial_amqp>
+            <connection>
+                <!-- necessary to get the config value auto-decrypted -->
+                <password backend_model="adminhtml/system_config_backend_encrypted"/>
+            </connection>
+        </radial_amqp>
+    </default>
+    <phpunit>
+        <suite>
+            <modules>
+                <Radial_Amqp/>
+            </modules>
+        </suite>
+    </phpunit>
+</config>

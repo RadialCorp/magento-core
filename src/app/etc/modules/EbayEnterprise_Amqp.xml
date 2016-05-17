@@ -14,9 +14,9 @@ http://opensource.org/licenses/osl-3.0.php
 -->
 <config>
     <modules>
-        <EbayEnterprise_Amqp>
+        <Radial_Amqp>
             <active>true</active>
             <codePool>community</codePool>
-        </EbayEnterprise_Amqp>
+        </Radial_Amqp>
     </modules>
 </config>
