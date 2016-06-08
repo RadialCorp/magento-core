@@ -140,7 +140,8 @@ class Radial_Amqp_Model_Runner
     protected function _dispatchPayload(IOrderEvent $payload, Mage_Core_Model_Store $store)
     {
         $eventName = $this->_eventPrefix . '_' . $this->_coreHelper->underscoreWords($payload->getEventType());
-        $logData = ['event_name' => $eventName];
+        /** @var \eBayEnterprise\RetailOrderManagement\Payload\IPayload $payload */
+        $logData = ['event_name' => $eventName, 'payload' => $payload->serialize()];
         $logMessage = 'Dispatching event "{event_name}" for payload.';
         $this->_logger->info($logMessage, $this->_context->getMetaData(__CLASS__, $logData));
         Mage::dispatchEvent($eventName, array('payload' => $payload, 'store' => $store));
