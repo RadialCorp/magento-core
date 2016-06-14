@@ -37,7 +37,9 @@ class Radial_Amqp_Test_Model_RunnerTest extends Radial_Core_Test_Base
         $this->_amqpConfigHelper = $this->getHelperMock('radial_amqp/config');
         $this->_sdk = $this->getMock('eBayEnterprise\RetailOrderManagement\Api\IAmqpApi');
         $this->_payloadIterator = $this->getMock('eBayEnterprise\RetailOrderManagement\Payload\IPayloadIterator');
-        $this->_payload = $this->getMock('eBayEnterprise\RetailOrderManagement\Payload\OrderEvents\IOrderEvent');
+        $this->_payload = $this->getMockBuilder('eBayEnterprise\RetailOrderManagement\Payload\OrderEvents\IOrderEvent')
+            ->setMethods(['serialize', 'getEventType', 'getStoreId', 'setStoreId', 'getCustomerOrderId', 'setCustomerOrderId'])
+            ->getMock();
         // suppressing the real session from starting
         $session = $this->getModelMockBuilder('core/session')
             ->disableOriginalConstructor()
