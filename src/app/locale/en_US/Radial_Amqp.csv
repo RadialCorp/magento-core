@@ -1,0 +1,6 @@
+"Radial_Amqp_No_Test_Message_Received", "No test messages received."
+"Radial_Amqp_Api_Validator_Invalid_Configuration", "Missing or invalid Order Events AMQP settings: %s"
+"Radial_Amqp_Api_Validator_No_Queues_Configured", "No queues configured"
+"Radial_Amqp_Api_Validator_Connection_Failed", "AMQP connection failed"
+"Radial_Amqp_Api_Validator_Connection_Success", "AMQP connection successful"
+"Radial_Amqp_Api_Validator_Unable_To_Validate", "Unable to validate connection"
