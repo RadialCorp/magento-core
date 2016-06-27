@@ -564,6 +564,8 @@ class Radial_Core_Helper_Data extends Mage_Core_Helper_Abstract implements Radia
         array $endpointParams = [],
         LoggerInterface $logger = null
     ) {
+	$timeout = Mage::getStoreConfig('radial_core/payments/responsetimeout');
+
         $config = $this->getConfigModel();
         $apiLogger = $logger ?: $this->_logger;
         $apiConfig = new Api\HttpConfig(
@@ -575,7 +577,8 @@ class Radial_Core_Helper_Data extends Mage_Core_Helper_Abstract implements Radia
             $service,
             $operation,
             $endpointParams,
-            $apiLogger
+            $apiLogger,
+	    $timeout
         );
         return new Api\HttpApi($apiConfig, $apiLogger);
     }
