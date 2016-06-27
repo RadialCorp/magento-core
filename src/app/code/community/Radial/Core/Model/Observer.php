@@ -22,7 +22,7 @@ class Radial_Core_Model_Observer
 
     public function __construct($init = [])
     {
-        list($this->helper) = $this->checkTypes(
+        list($this->helper, $this->fraudConfigHelper) = $this->checkTypes(
             $this->nullCoalesce($init, 'helper', Mage::helper('radial_core'))
         );
     }
