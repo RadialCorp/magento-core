@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-Copyright (c) 2013-2014 eBay Enterprise, Inc.
+Copyright (c) 2013-2016 Radial Commerce Inc.
 
 NOTICE OF LICENSE
 
@@ -9,21 +9,38 @@ that is bundled with this package in the file LICENSE.md.
 It is also available through the world-wide-web at this URL:
 http://opensource.org/licenses/osl-3.0.php
 
-@copyright   Copyright (c) 2013-2014 eBay Enterprise, Inc. (http://www.ebayenterprise.com/)
+@copyright   Copyright (c) 2013-2016 Radial Commerce Inc. (http://www.ebayenterprise.com/)
 @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
 -->
 <config>
     <modules>
         <Radial_Core>
-            <version>0.9.0</version>
+            <version>0.9.1</version>
         </Radial_Core>
     </modules>
     <global>
         <models>
             <radial_core>
                 <class>Radial_Core_Model</class>
+		<resourceModel>radial_core_resource</resourceModel>
             </radial_core>
+	    <radial_core_resource>
+                <class>Radial_Core_Model_Resource</class>
+                <entities>
+                    <retryqueue>
+                        <table>retryqueue</table>
+                    </retryqueue>
+                </entities>
+            </radial_core_resource>
         </models>
+	<resources>
+            <radial_core_setup>
+                <setup>
+                    <module>Radial_Core</module>
+                    <class>Mage_Sales_Model_Resource_Setup</class>
+                </setup>
+            </radial_core_setup>
+        </resources>
         <helpers>
             <radial_core>
                 <class>Radial_Core_Helper</class>
@@ -234,83 +251,6 @@ http://opensource.org/licenses/osl-3.0.php
                     </status>
                 </test_connection_status_handlers>
             </api>
-            <feed>
-                <destination_type>MAILBOX</destination_type>
-                <filetransfer_protocol>sftp</filetransfer_protocol>
-                <filetransfer_sftp_auth_type>pub_key</filetransfer_sftp_auth_type>
-                <!--
-                Archive directories for all acknowledged imported and exported files
-                -->
-                <import_archive>ExchangePlatform/Feed/archive/import</import_archive>
-                <export_archive>ExchangePlatform/Feed/archive/export</export_archive>
-                <processing_directory>ExchangePlatform/Feed/processing</processing_directory>
-                <filetransfer_imports>
-                    <acknowledgements>
-                        <!-- Local directory is relative to Magento's 'var' directory -->
-                        <local_directory>ExchangePlatform/Feed/inbox/ack</local_directory>
-                        <remote_directory>/Inbox</remote_directory>
-                        <local_error_directory>ExchangePlatform/Feed/error</local_error_directory>
-                        <file_pattern>*Ack*.xml</file_pattern>
-                    </acknowledgements>
-                </filetransfer_imports>
-                <filetransfer_exports>
-                    <acknowledgements>
-                        <!-- Local directory is always relative to Magento's configured 'var' directory. -->
-                        <local_directory>ExchangePlatform/Feed/outbox/ack</local_directory>
-                        <remote_directory>/Inbox</remote_directory>
-                        <!--
-                        Sent acks can go straight to archive as there will never be
-                        a received ack for a sent ack nor will we ever need to resent them.
-                        -->
-                        <sent_directory>ExchangePlatform/Feed/archive/export/ack</sent_directory>
-                        <filename_format>ack_{eventtype}_{clientid}_{storeid}_{timestamp}.xml</filename_format>
-                        <timestamp_format>YmdHis</timestamp_format>
-                        <xsd>AcknowledgementV11.xsd</xsd>
-                    </acknowledgements>
-                    <error_confirmations>
-                        <local_directory>ExchangePlatform/Feed/outbox/error</local_directory>
-                        <remote_directory>/</remote_directory>
-                        <!--
-                        Sent error confirmations can go straight to archive as there will
-                        never be a received ack for a sent error confirmation nor will we
-                        ever need to resent them.
-                        -->
-                        <sent_directory>ExchangePlatform/Feed/archive/export/error</sent_directory>
-                        <filename_format>{client_id}_{catalog_id}_{store_id}_errorconfirmation_{feed_type}_{time_stamp}.xml</filename_format>
-                        <xsd>ErrorConfirmationV11.xsd</xsd>
-                    </error_confirmations>
-                    <!--
-                    This outbox can be used for any other files that need to be exported.
-                    This should largely prevent other modules from needing to provide
-                    any further export configuration and provide a single known point
-                    for all export configuration.
-                    -->
-                    <eb2c_outbox>
-                        <local_directory>ExchangePlatform/Feed/outbox/</local_directory>
-                        <remote_directory>/</remote_directory>
-                        <sent_directory>ExchangePlatform/Feed/sent/</sent_directory>
-                    </eb2c_outbox>
-                </filetransfer_exports>
-                <header_template><![CDATA[<MessageHeader>
-        <Standard>{standard}</Standard>
-        <HeaderVersion>{header_version}</HeaderVersion>
-        <VersionReleaseNumber>{version_release_number}</VersionReleaseNumber>
-        <SourceData>
-            <SourceId>{source_id}</SourceId>
-            <SourceType>{source_type}</SourceType>
-        </SourceData>
-        <DestinationData>
-            <DestinationId>{destination_id}</DestinationId>
-            <DestinationType>{destination_type}</DestinationType>
-        </DestinationData>
-        <EventType>{event_type}</EventType>
-        <MessageData>
-            <MessageId>{message_id}</MessageId>
-            <CorrelationId>{correlation_id}</CorrelationId>
-        </MessageData>
-        <CreateDateAndTime>{create_date_and_time}</CreateDateAndTime>
-    </MessageHeader>]]></header_template>
-            </feed>
             <service>
                 <order>
                     <timeout>15</timeout>
@@ -318,23 +258,12 @@ http://opensource.org/licenses/osl-3.0.php
                 <payment>
                     <timeout>17</timeout>
                 </payment>
-                <inventory>
-                    <expiration>15</expiration>
-                    <is_backorderable>1</is_backorderable>
-                    <is_use_street_date_as_edd_date>1</is_use_street_date_as_edd_date>
-                    <to_street_date_range>3</to_street_date_range>
-                </inventory>
             </service>
             <shipping>
                 <virtual_shipping_method_id>ANY_EMAIL</virtual_shipping_method_id>
                 <virtual_shipping_method_description>E-mail Delivery</virtual_shipping_method_description>
             </shipping>
         </radial_core>
-        <filetransfer>
-            <registry>
-                <radial_core_filetransfer_registry>radial_core/feed</radial_core_filetransfer_registry>
-            </registry>
-        </filetransfer>
     </default>
     <phpunit>
         <suite>

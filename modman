@@ -16,6 +16,9 @@ src/skin/adminhtml/default/default/css/* skin/adminhtml/default/default/css/
 # JS 
 src/js/* js/
 
+# LIB
+src/lib/Radial/RiskService/ lib/Radial/RiskService/
+
 # Locale
 src/app/locale/en_US/Radial_Core.csv app/locale/en_US/Radial_Core.csv
 src/app/locale/en_US/Radial_Amqp.csv app/locale/en_US/Radial_Amqp.csv
