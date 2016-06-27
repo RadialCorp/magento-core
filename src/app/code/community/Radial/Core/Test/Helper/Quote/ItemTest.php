@@ -70,14 +70,4 @@ class Radial_Core_Test_Helper_Quote_ItemTest extends EcomDev_PHPUnit_Test_Case
             [$childInventoriesParentSku, true], // Set by ROM to not be inventoried, but child forces it.
         ];
     }
-    /**
-     * Test the isItemInventoried method.
-     * @param  Mage_Sales_Model_Quote_Item $item
-     * @param  bool $isInventoried whether the item is expected to be subject to ROM inventory processing or not.
-     * @dataProvider providerIsItemInventoried
-     */
-    public function testIsItemInventoried($item, $isInventoried)
-    {
-        $this->assertSame($isInventoried, Mage::helper('radial_core/quote_item')->isItemInventoried($item));
-    }
 }
