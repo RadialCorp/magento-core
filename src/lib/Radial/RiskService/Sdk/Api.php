@@ -213,10 +213,19 @@ class Radial_RiskService_Sdk_Api
 			throw Mage::exception('Radial_RiskService_Sdk_Exception_Network_Error', "Unsupported Payload - ". $xml->getName());
 		}
 
+		$options = array();
+
+		if( $this->_config->getResponseTimeout() )
+		{
+			$seconds = (float)$this->_config->getResponseTimeout() / 1000.0;
+			$options = array( 'timeout' => $seconds );
+		}
+
 		$this->_lastRequestsResponse = Requests::post(
 			$hostname,
 			$this->_buildHeader(),
-			$requestXml
+			$requestXml,
+			$options
 		);
 		return $this->_lastRequestsResponse->success;
 	}

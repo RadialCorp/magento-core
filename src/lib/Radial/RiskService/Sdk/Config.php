@@ -41,12 +41,15 @@ class Radial_RiskService_Sdk_Config
 	protected $_OCresponse;
 	/** @var Radial_RiskService_Sdk_IPayload */
 	protected $_error;
+	/** @var integer */
+	protected $_responsetimeout;
 
 	/**
 	 * @param array $initParams Must have this key:
 	 *                          - 'api_key' => string
 	 *                          - 'host' => string
 	 *                          - 'store_id' => string
+	 *			    - 'responsetimeout' => integer (ms)
 	 *                          - 'request' => Radial_RiskService_Sdk_IPayload
 	 *                          - 'response' => Radial_RiskService_Sdk_IPayload
 	 *                          - 'error' => Radial_RiskService_Sdk_IPayload
@@ -59,6 +62,7 @@ class Radial_RiskService_Sdk_Config
 			$this->_apiKey,
 			$this->_host,
 			$this->_storeId,
+			$this->_responsetimeout,
 			$this->_request,
 			$this->_response,
 			$this->_error,
@@ -68,6 +72,7 @@ class Radial_RiskService_Sdk_Config
 			$this->_nullCoalesce($initParams, 'api_key', null),
 			$this->_nullCoalesce($initParams, 'host', null),
 			$this->_nullCoalesce($initParams, 'store_id', null),
+			$this->_nullCoalesce($initParams, 'responsetimeout', null),
 			$this->_nullCoalesce($initParams, 'request', $this->_getNewInstance('Radial_RiskService_Sdk_Request')),
 			$this->_nullCoalesce($initParams, 'response', $this->_getNewInstance('Radial_RiskService_Sdk_Response')),
 			$this->_nullCoalesce($initParams, 'error', $this->_getNewInstance('Radial_RiskService_Sdk_Error')),
@@ -94,6 +99,7 @@ class Radial_RiskService_Sdk_Config
 	 * @param  string
 	 * @param  string
 	 * @param  string
+	 * @param  integer
 	 * @param  Radial_RiskService_Sdk_IPayload
 	 * @param  Radial_RiskService_Sdk_IPayload
 	 * @param  Radial_RiskService_Sdk_IPayload
@@ -105,13 +111,14 @@ class Radial_RiskService_Sdk_Config
 		$apiKey,
 		$host,
 		$storeId,
+		$responseTimeout,
 		Radial_RiskService_Sdk_IPayload $request,
 		Radial_RiskService_Sdk_IPayload $response,
 		Radial_RiskService_Sdk_IPayload $error,
 		Radial_RiskService_Sdk_IPayload $ocresponse,
 		Radial_RiskService_Sdk_IPayload $ocrequest
 	) {
-		return array($apiKey, $host, $storeId, $request, $response, $error, $ocresponse, $ocrequest);
+		return array($apiKey, $host, $storeId, $responseTimeout, $request, $response, $error, $ocresponse, $ocrequest);
 	}
 
 	/**
@@ -141,6 +148,14 @@ class Radial_RiskService_Sdk_Config
 	public function getStoreId()
 	{
 		return $this->_storeId;
+	}
+
+	/**
+	 * @return integer
+	 */
+	public function getResponseTimeout()
+	{
+		return $this->_responsetimeout;
 	}
 
 	/**
