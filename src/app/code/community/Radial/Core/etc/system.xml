@@ -95,6 +95,24 @@ http://opensource.org/licenses/osl-3.0.php
                             <show_in_website>1</show_in_website>
                             <show_in_store>0</show_in_store>
                         </client_customer_id_prefix>
+			<ptfinstalled translate="label">
+                            <label>PTF Installed?</label>
+                            <sort_order>61</sort_order>
+                            <frontend_type>label</frontend_type>
+                            <backend_model>radial_core/adminhtml_system_config_backend_pTFinstalled</backend_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </ptfinstalled>
+                        <romxmlinstalled translate="label">
+                            <label>ROM XML Configured?</label>
+                            <sort_order>62</sort_order>
+                            <frontend_type>label</frontend_type>
+                            <backend_model>radial_core/adminhtml_system_config_backend_rOMxmlinstalled</backend_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </romxmlinstalled>
                     </fields>
                 </general>
                 <api translate="label">
