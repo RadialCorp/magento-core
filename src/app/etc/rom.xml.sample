@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-Copyright (c) 2013-2014 eBay Enterprise, Inc.
+Copyright (c) 2013-2016 Radial Commerce, Inc.
 
 NOTICE OF LICENSE
 
@@ -9,12 +9,23 @@ that is bundled with this package in the file LICENSE.md.
 It is also available through the world-wide-web at this URL:
 http://opensource.org/licenses/osl-3.0.php
 
-@copyright   Copyright (c) 2013-2014 eBay Enterprise, Inc. (http://www.ebayenterprise.com/)
+@copyright   Copyright (c) 2013-2016 Radial Commerce, Inc. (http://www.radial.com/)
 @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
 -->
 <config>
+    <!-- Cron Jobs -->
+    <crontab>
+        <jobs>
+            <!-- AMQP Queue Process: This job will request new messages from the ROM message queues. Suggested Schedule: As often as possible -->
+            <radial_amqp_runner_process_queues>
+                <schedule>
+                    <cron_expr>*/5 * * * *</cron_expr>
+                </schedule>
+            </radial_amqp_runner_process_queues>
+        </jobs>
+    </crontab>
     <default>
-        <radial_core>
+	<radial_core>
             <!--
             Shipping Codes: Map Magento shipping methods to ROM shipping codes. Node names must match Magento shipping
             methods. Values must match ROM shipping codes specific to your client implementation, which eBay Enterpise
@@ -22,17 +33,19 @@ http://opensource.org/licenses/osl-3.0.php
             -->
             <shipmap>
                 <flatrate_flatrate>ANY_STD</flatrate_flatrate>
+                <freeshipping_freeshipping>ANY_ECON</freeshipping_freeshipping>
             </shipmap>
         </radial_core>
-	 <!--
-        Message Queue: Configuration to fetch messages from the ROM message queue. Unless otherwise noted, the provided
-        sample values should suffice for most uses.
-        -->
+        <radial_tax>
+            <tax_class>
+                <!-- tax class to use for the shipping price group -->
+                <shipping>93000</shipping>
+            </tax_class>
+        </radial_tax>
+	<!-- Message Queue: Configuration to fetch messages from the ROM message queue. Unless otherwise noted, the provided sample values should suffice for most uses. -->
         <radial_amqp>
             <general>
-                <!--
-                Number of Messages to Process: Specify the number of messages to fetch at one time from a single queue.
-                -->
+                <!-- Number of Messages to Process: Specify the number of messages to fetch at one time from a single queue. -->
                 <number_of_messages_to_process>15</number_of_messages_to_process>
             </general>
             <connection>
@@ -73,7 +86,8 @@ http://opensource.org/licenses/osl-3.0.php
                 placeholder replaced by the current configured store id.
                 -->
                 <queue_names>
-                    <orders>q.Order.Event.{store_id}</orders>
+                    <orders>q.Risk.Orders.Status.{store_id}</orders>
+		    <settlement_status>q.Payments.Settlements.Status.{store_id}</settlement_status>
                 </queue_names>
                 <passive>0</passive>
                 <durable>1</durable>
@@ -83,5 +97,18 @@ http://opensource.org/licenses/osl-3.0.php
                 <binding_nowait>0</binding_nowait>
             </queue>
         </radial_amqp>
+	<radial_creditcard>
+            <!--
+            Credit Card Tenders: Map Magento credit card types to ROM credit card tender types. Node names must match
+            the credit card code as configured in Mage_Payment's etc/config.xml. Values must match credit card tender
+            types supported by the ROM payment service.
+            -->
+            <tender_types>
+                <AE>AM</AE>
+                <DI>DC</DI>
+                <MC>MC</MC>
+                <VI>VC</VI>
+            </tender_types>
+        </radial_creditcard>
     </default>
 </config>
