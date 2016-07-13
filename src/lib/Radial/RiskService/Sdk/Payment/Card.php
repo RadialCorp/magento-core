@@ -192,8 +192,13 @@ class Radial_RiskService_Sdk_Payment_Card
 	protected function _serializePaymentAccountUniqueId()
 	{
 		$isToken = $this->getIsToken();
-		$isToken = !is_null($isToken) ? "true" : "0";
-		$paymentAccountUniqueId = $this->getPaymentAccountUniqueId();
-		return $paymentAccountUniqueId ? "<PaymentAccountUniqueId isToken=\"{$isToken}\">{$paymentAccountUniqueId}</PaymentAccountUniqueId>" : '';
+                $paymentAccountUniqueId = $this->getPaymentAccountUniqueId();
+
+                if( $isToken && $isToken != false && $isToken != "false" )
+                {
+                         return $paymentAccountUniqueId ? "<PaymentAccountUniqueId isToken=\"true\">{$paymentAccountUniqueId}</PaymentAccountUniqueId>" : '';
+                } else {
+                         return $paymentAccountUniqueId ? "<PaymentAccountUniqueId isToken=\"0\">{$paymentAccountUniqueId}</PaymentAccountUniqueId>" : '';
+                }
 	}
 }
