@@ -33,6 +33,10 @@ class Radial_RiskService_Sdk_Payment_Card
 	protected $_cardType;
 	/** @var string */
 	protected $_gatewayKey;
+	/** @var string */
+	protected $_orderAppId;
+	/** @var string */
+	protected $_paymentSessionId;
 
 	public function __construct(array $initParams=array())
 	{
