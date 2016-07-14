@@ -31,6 +31,8 @@ class Radial_RiskService_Sdk_Payment_Card
 	protected $_expireDate;
 	/** @var string */
 	protected $_cardType;
+	/** @var string */
+	protected $_gatewayKey;
 
 	public function __construct(array $initParams=array())
 	{
@@ -40,6 +42,9 @@ class Radial_RiskService_Sdk_Payment_Card
 			'setPaymentAccountUniqueId' => 'x:PaymentAccountUniqueId',
 			'setPaymentAccountBin' => 'x:PaymentAccountBin',
 			'setExpireDate' => 'x:ExpireDate',
+			'setOrderAppId' => 'x:OrderAppId',
+			'setPaymentSessionId' => 'x:PaymentSessionId',
+			'setGatewayKey' => 'x:GatewayKey',
 			'setCardType' => 'x:CardType',
 		);
 		$this->_booleanExtractionPaths = array(
@@ -150,6 +155,57 @@ class Radial_RiskService_Sdk_Payment_Card
 	}
 
 	/**
+	 * @see Radial_RiskService_Sdk_Payment_ICard::getGatewayKey()
+	 */
+	public function getGatewayKey()
+	{
+		return $this->_gatewayKey;
+	}
+
+	/**
+	 * @see Radial_RiskService_Sdk_Payment_ICard::setGatewayKey()
+	 */
+	public function setGatewayKey($gatewayKey)
+	{
+		$this->_gatewayKey = $gatewayKey;
+		return $this;
+	}
+
+	/**
+         * @see Radial_RiskService_Sdk_Payment_ICard::getOrderAppId()
+         */
+        public function getOrderAppId()
+        {
+                return $this->_orderAppId;
+        }
+
+        /**
+         * @see Radial_RiskService_Sdk_Payment_ICard::setOrderAppId()
+         */
+        public function setOrderAppId($orderAppId)
+        {
+                $this->_orderAppId = $orderAppId;
+                return $this;
+        }
+
+	/**
+         * @see Radial_RiskService_Sdk_Payment_ICard::getPaymentSessionId()
+         */
+        public function getPaymentSessionId()
+        {
+                return $this->_paymentSessionId;
+        }
+
+        /**
+         * @see Radial_RiskService_Sdk_Payment_ICard::setPaymentSessionId()
+         */
+        public function setPaymentSessionId($paymentSessionId)
+        {
+                $this->_paymentSessionId = $paymentSessionId;
+                return $this;
+        }
+
+	/**
 	 * @see Radial_RiskService_Sdk_Payload::_canSerialize()
 	 */
 	protected function _canSerialize()
@@ -181,6 +237,9 @@ class Radial_RiskService_Sdk_Payment_Card
 		return $this->_serializeOptionalValue('CardHolderName', $this->getCardHolderName())
 			. $this->_serializePaymentAccountUniqueId()
 			. $this->_serializeOptionalValue('ExpireDate', $this->getExpireDate())
+			. $this->_serializeOptionalValue('OrderAppId', $this->getOrderAppId())
+			. $this->_serializeOptionalValue('PaymentSessionId', $this->getPaymentSessionId())
+			. $this->_serializeOptionalValue('GatewayKey', $this->getGatewayKey())
 			. $this->_serializeOptionalValue('CardType', $this->getCardType());
 	}
 

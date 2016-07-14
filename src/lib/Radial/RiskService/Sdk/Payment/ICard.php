@@ -90,4 +90,37 @@ interface Radial_RiskService_Sdk_Payment_ICard extends Radial_RiskService_Sdk_IP
 	 * @return self
 	 */
 	public function setCardType($cardType);
+
+	/**
+	 * @return string
+	 */
+	public function getGatewayKey();
+
+	/**
+	 * @param  string
+	 * @return self
+	 */
+	public function setGatewayKey($gatewayKey);
+
+	/**
+         * @return string
+         */
+        public function getOrderAppId();
+
+        /**
+         * @param  string
+         * @return self
+         */
+        public function setOrderAppId($orderAppId);
+
+	/**
+         * @return string
+         */
+        public function getPaymentSessionId();
+
+        /**
+         * @param  string
+         * @return self
+         */
+        public function setPaymentSessionId($paymentSessionId);
 }
