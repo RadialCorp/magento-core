@@ -35,7 +35,7 @@ class Radial_RiskService_Sdk_Total
 			'setFormOfPayment' => 'x:FormOfPayment',
 		);
         	$this->_optionalExtractionPaths = array(
-        	    	'setFailedCc' => 'x:FailedCc/@number',
+        	    	'setFailedCc' => 'x:FailedCc/@Number',
         	);
 	}
 
