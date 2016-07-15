@@ -130,6 +130,6 @@ class Radial_RiskService_Sdk_Total
 	protected function _serializeCcFailed()
 	{
                 $failedCc = $this->getFailedCc();
-                return $failedCc ? "<FailedCc Number=\"${failedCc}\"/>" : '';
+		return $failedCc ? "<FailedCc Number=\"${failedCc}\"/>" : "<FailedCc Number=\"0\"/>";
 	}
 }
