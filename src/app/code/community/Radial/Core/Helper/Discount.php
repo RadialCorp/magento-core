@@ -123,11 +123,11 @@ class Radial_Core_Helper_Discount
 
     /**
      * Transfer discount data from Mage_Sales_Model_Qoute_Addresses
-     * or Mage_Sales_Model_Quote_Items to TaxDutyFee\ITaxedDiscountIterable.
+     * or Mage_Sales_Model_Quote_Items to TaxDutyFee\ITaxedDiscountContainer.
      *
      * @param Varien_Object
-     * @param ITaxedDiscountIterable
-     * @return ITaxedDiscountIterable
+     * @param ITaxedDiscountContainer
+     * @return ITaxedDiscountContainer
      */
     public function transferInvoiceTaxDiscounts(Varien_Object $salesObject, ITaxedDiscountContainer $discountContainer)
     {
