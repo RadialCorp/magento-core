@@ -11,7 +11,7 @@
     ],
     "type": "magento-module",
     "require": {
-        "php": ">=5.4.0",
+        "php": ">=5.6.0",
         "ext-bcmath": "*",
         "ebayenterprise/magento-log": ">=2.0.2,<3.0",
         "ebayenterprise/php-dom": "~1.0",
