@@ -19,6 +19,8 @@ use eBayEnterprise\RetailOrderManagement\Payload\Order\IDiscountIterable;
 use eBayEnterprise\RetailOrderManagement\Payload\TaxDutyFee\IDiscount as ITaxDiscount;
 use eBayEnterprise\RetailOrderManagement\Payload\TaxDutyFee\IDiscountContainer as ITaxDiscountContainer;
 use eBayEnterprise\RetailOrderManagement\Payload\TaxDutyFee\IDiscountIterable as ITaxDiscountIterable;
+use eBayEnterprise\RetailOrderManagement\Payload\TaxDutyFee\ITaxedDiscountIterable;
+use eBayEnterprise\RetailOrderManagement\Payload\TaxDutyFee\ITaxedDiscountContainer;
 
 /**
  * Helps transfer discount data from Mage_Sales_Model_Order to
@@ -109,6 +111,27 @@ class Radial_Core_Helper_Discount
     public function transferTaxDiscounts(Varien_Object $salesObject, ITaxDiscountContainer $discountContainer)
     {
         /** @var ITaxDiscountIterable $discounts */
+        $discounts = $discountContainer->getDiscounts();
+        $data = $this->getDiscountsData($salesObject);
+        foreach ($data as $loneDiscountData) {
+            $discount = $this->_fillOutTaxDiscount($discounts->getEmptyDiscount(), $loneDiscountData);
+            ;
+            $discounts[$discount] = $discount;
+        }
+        return $discountContainer->setDiscounts($discounts);
+    }
+
+    /**
+     * Transfer discount data from Mage_Sales_Model_Qoute_Addresses
+     * or Mage_Sales_Model_Quote_Items to TaxDutyFee\ITaxedDiscountIterable.
+     *
+     * @param Varien_Object
+     * @param ITaxedDiscountIterable
+     * @return ITaxedDiscountIterable
+     */
+    public function transferInvoiceTaxDiscounts(Varien_Object $salesObject, ITaxedDiscountContainer $discountContainer)
+    {
+    	/** @var ITaxedDiscountIterable $discounts */
         $discounts = $discountContainer->getDiscounts();
         $data = $this->getDiscountsData($salesObject);
         foreach ($data as $loneDiscountData) {
