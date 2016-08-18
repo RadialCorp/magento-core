@@ -113,6 +113,7 @@ class Radial_Core_Helper_Discount
         /** @var ITaxDiscountIterable $discounts */
         $discounts = $discountContainer->getDiscounts();
         $data = $this->getDiscountsData($salesObject);
+
         foreach ($data as $loneDiscountData) {
             $discount = $this->_fillOutTaxDiscount($discounts->getEmptyDiscount(), $loneDiscountData);
             ;
@@ -133,12 +134,24 @@ class Radial_Core_Helper_Discount
     {
     	/** @var ITaxedDiscountIterable $discounts */
         $discounts = $discountContainer->getDiscounts();
-        $data = $this->getDiscountsData($salesObject);
-        foreach ($data as $loneDiscountData) {
-            $discount = $this->_fillOutTaxDiscount($discounts->getEmptyDiscount(), $loneDiscountData);
-            ;
-            $discounts[$discount] = $discount;
-        }
+        
+	$itemC = Mage::getModel('sales/order_item')->getCollection()
+                                ->addFieldToFilter('item_id', array('eq' => $salesObject->getData('order_item_id')));
+
+	if( $itemC->getSize() > 0 )
+	{
+		$data = unserialize($itemC->getFirstItem()->getData('ebayenterprise_order_discount_data'));
+
+		if($data)
+		{
+        		foreach ($data as $loneDiscountData) {
+        		    $discount = $this->_fillOutTaxDiscount($discounts->getEmptyDiscount(), $loneDiscountData);
+        		    ;
+        		    $discounts[$discount] = $discount;
+        		}
+		}
+	}
+
         return $discountContainer->setDiscounts($discounts);
     }
 

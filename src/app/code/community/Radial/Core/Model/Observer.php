@@ -205,7 +205,24 @@ class Radial_Core_Model_Observer
             'effect_type' => $rule->getSimpleAction(),
             'id' => $ruleId,
         ];
-        $item->setEbayEnterpriseOrderDiscountData($data);
+	if( $item instanceof Mage_Sales_Model_Quote_Address_Item )
+	{
+		$item->setEbayEnterpriseOrderDiscountData($data);
+
+		foreach( $quote->getAllItems() as $quoteItem )
+		{
+			if( $quoteItem->getId() === $item->getQuoteItemId())
+			{
+				$quoteItem->setData('ebayenterprise_order_discount_data', serialize($data));
+                		$quoteItem->save();
+				break;
+			}
+		}
+	} else {
+		$item->setEbayEnterpriseOrderDiscountData($data);
+		$item->setData('ebayenterprise_order_discount_data', serialize($data));
+		$item->save();
+	}
     }
 
     /**
@@ -219,7 +236,7 @@ class Radial_Core_Model_Observer
      * @param  array
      * @return float
      */
-    protected function calculateDiscountAmount(Mage_Sales_Model_Quote_Item $item, Varien_Object $result, array $data)
+    protected function calculateDiscountAmount(Mage_Sales_Model_Quote_Item_Abstract $item, Varien_Object $result, array $data)
     {
         /** @var float */
         $itemRowTotal = $item->getBaseRowTotal();
