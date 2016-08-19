@@ -144,11 +144,19 @@ class Radial_Core_Helper_Discount
 
 		if($data)
 		{
-        		foreach ($data as $loneDiscountData) {
-        		    $discount = $this->_fillOutTaxDiscount($discounts->getEmptyDiscount(), $loneDiscountData);
-        		    ;
-        		    $discounts[$discount] = $discount;
-        		}
+		    foreach ($data as $loneDiscountData) {
+                            if( $loneDiscountData['amount'] != 0 )
+                            {
+                                $appliedCount = $loneDiscountData['applied_count'];
+                                $singleDisc = $loneDiscountData['amount'] / $appliedCount;
+                                $newAmount = $singleDisc * $salesObject->getQty();
+                                $loneDiscountData['amount'] = $newAmount;
+
+                                $discount = $this->_fillOutTaxDiscount($discounts->getEmptyDiscount(), $loneDiscountData);
+                                ;
+                                $discounts[$discount] = $discount;
+                            }
+                    }
 		}
 	}
 
