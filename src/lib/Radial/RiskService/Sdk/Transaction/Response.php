@@ -38,7 +38,8 @@ class Radial_RiskService_Sdk_Transaction_Response
 		'AmexPhone'
 	);
 	/** @var array */
-	protected $_responseEnums = array('M', 'N', 'confirmed', 'verified', 'X', 'Y', '0', 'O', 'U');
+	/** @var array */
+	protected $_responseEnums = array('confirmed', 'verified', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'I', 'M', 'N', 'P', 'R', 'S', 'T', 'U', 'W', 'X', 'Y', 'Z', '0', 'AD', 'AE', 'AF', 'AK', 'AL', 'AM', 'AO', 'AW');
 
 	public function __construct(array $initParams=array())
 	{
