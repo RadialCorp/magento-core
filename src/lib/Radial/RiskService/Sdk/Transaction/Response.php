@@ -25,6 +25,7 @@ class Radial_RiskService_Sdk_Transaction_Response
 	protected $_responseType;
 	/** @var array */
 	protected $_responseTypeEnums = array(
+		'primary',
 		'avsAddr',
 		'avsZip',
 		'3ds',
