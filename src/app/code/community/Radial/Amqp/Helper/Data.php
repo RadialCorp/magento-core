@@ -77,6 +77,7 @@ class Radial_Amqp_Helper_Data extends Mage_Core_Helper_Abstract implements Radia
             $config->connectionLocale,
             $config->connectionTimeout,
             $config->connectionReadWriteTimeout,
+	    $config->connectionHeartbeat,
             $queueName,
             $config->queuePassiveFlag,
             $config->queueDurableFlag,
