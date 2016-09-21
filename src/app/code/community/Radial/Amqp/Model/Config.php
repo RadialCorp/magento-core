@@ -26,6 +26,7 @@ class Radial_Amqp_Model_Config extends Radial_Core_Model_Config_Abstract
         'connection_read_write_timeout' => 'radial_amqp/connection/read_write_timeout',
         'connection_timeout' => 'radial_amqp/connection/timeout',
         'connection_type' => 'radial_amqp/connection/type',
+	'connection_heartbeat' => 'radial_amqp/connection/heartbeat',
         'hostname' => 'radial_amqp/connection/hostname',
         'password' => 'radial_amqp/connection/password',
         'port' => 'radial_amqp/connection/port',
