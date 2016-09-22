@@ -121,14 +121,14 @@ class Radial_Amqp_Model_Runner
         $this->_api->openConnection();
         $this->_api->getChannel()->basic_consume($queue, '', false, false, false, false, array($this, 'process'));
 
-        $timeout = 30;
+        $timeout = $this->_helper->getConfigModel($store)->queueTimeout ? $this->_helper->getConfigModel($store)->queueTimeout : 5;
         while (count($this->_api->getChannel()->callbacks)) {
                 try{
                     $this->_api->getChannel()->wait(null, false , $timeout);
                 }catch(\PhpAmqpLib\Exception\AMQPTimeoutException $e){
                     $this->_api->getChannel()->close();
 		    $this->_api->closeConnection();
-                    exit;
+                    break;
                 }
         }
 

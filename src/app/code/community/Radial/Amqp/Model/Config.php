@@ -40,5 +40,6 @@ class Radial_Amqp_Model_Config extends Radial_Core_Model_Config_Abstract
         'queue_names' => 'radial_amqp/queue/queue_names',
         'queue_nowait' => 'radial_amqp/queue/nowait',
         'queue_passive' => 'radial_amqp/queue/passive',
+	'queue_timeout' => 'radial_amqp/queue/timeout',
     );
 }
