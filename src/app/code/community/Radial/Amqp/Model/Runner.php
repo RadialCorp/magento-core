@@ -29,6 +29,10 @@ class Radial_Amqp_Model_Runner
     protected $_logger;
     /** @var EbayEnterprise_MageLog_Helper_Context */
     protected $_context;
+    /** @var Mage_Core_Model_Store */
+    protected $_store;
+    /** @var IAmqpApi */
+    protected $_api;
 
     /**
      * @param array $initParams May accept:
@@ -87,6 +91,7 @@ class Radial_Amqp_Model_Runner
     {
         // consume queues for each store with a unique set of AMQP configuration
         foreach ($this->_amqpConfigHelper->getQueueConfigurationScopes() as $store) {
+	    $this->_store = $store;
             $this->_consumeStoreQueues($store);
         }
         return $this;
@@ -112,25 +117,34 @@ class Radial_Amqp_Model_Runner
      */
     protected function _consumeQueue($queue, Mage_Core_Model_Store $store)
     {
-        $sdk = $this->_helper->getSdkAmqp($queue, $store);
-        $payloads = $sdk->fetch();
-        // avoid use of foreach to allow exception handling during Current
-        while ($payloads->valid()) {
-            try {
-                $payload = $payloads->current();
-            } catch (Exception\Payload $e) {
-                // log and skip over any messages that cannot be handled by the SDK
-                $logData = ['queue' => $queue, 'error_message' => $e->getMessage()];
-                $logMessage = 'Received bad payload on queue {queue}: {error_message}';
-                $this->_logger->warning($logMessage, $this->_context->getMetaData(__CLASS__, $logData, $e));
-                $payloads->next();
-                continue;
-            }
-            $this->_dispatchPayload($payload, $store);
-            $payloads->next();
+        $this->_api = $this->_helper->getSdkAmqp($queue, $store);
+        $this->_api->openConnection();
+        $this->_api->getChannel()->basic_consume($queue, '', false, false, false, false, array($this, 'process'));
+
+        $timeout = 2;
+        while (count($this->_api->getChannel()->callbacks)) {
+                try{
+                    $this->_api->getChannel()->wait(null, false , $timeout);
+                }catch(\PhpAmqpLib\Exception\AMQPTimeoutException $e){
+                    $this->_api->getChannel()->close();
+                    exit;
+                }
         }
+
         return $this;
     }
+
+    public function process($msg)
+    {
+	$payload = $this->_api->processMessage($msg);
+
+	if($payload)
+	{
+        	$msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
+		$this->_dispatchPayload($payload, $this->_store);
+	}
+    }
+
     /**
      * Dispacth an event in Magento with the payload and store scope it was received in.
      * @param IOrderEvent $payload
