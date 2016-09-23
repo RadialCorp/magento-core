@@ -95,7 +95,7 @@ class Radial_Amqp_Helper_Data extends Mage_Core_Helper_Abstract implements Radia
      * @param Radial_Core_Model_Config_Registry $config
      * @return string
      */
-    protected function _processQueueName($queueName, Radial_Core_Model_Config_Registry $config)
+    public function _processQueueName($queueName, Radial_Core_Model_Config_Registry $config)
     {
         return str_replace(array('{store_id}'), array($config->storeId), $queueName);
     }

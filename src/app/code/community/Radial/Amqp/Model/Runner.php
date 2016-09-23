@@ -119,7 +119,7 @@ class Radial_Amqp_Model_Runner
     {
         $this->_api = $this->_helper->getSdkAmqp($queue, $store);
         $this->_api->openConnection();
-        $this->_api->getChannel()->basic_consume($queue, '', false, false, false, false, array($this, 'process'));
+        $this->_api->getChannel()->basic_consume($this->helper->_processQueueName($queue, $this->coreHelper->getConfigModel($store)), '', false, false, false, false, array($this, 'process'));
 
         $timeout = $this->_helper->getConfigModel($store)->queueTimeout ? $this->_helper->getConfigModel($store)->queueTimeout : 5;
         while (count($this->_api->getChannel()->callbacks)) {
