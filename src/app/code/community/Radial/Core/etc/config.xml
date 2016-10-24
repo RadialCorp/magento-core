@@ -23,7 +23,12 @@ http://opensource.org/licenses/osl-3.0.php
             <radial_core>
                 <class>Radial_Core_Model</class>
 		<resourceModel>radial_core_resource</resourceModel>
-            </radial_core>
+	    </radial_core>
+	    <eav>
+               	<rewrite>
+               	    <entity_attribute_backend_time_created>Radial_Core_Model_Eav_Entity_Attribute_Backend_Time_Created</entity_attribute_backend_time_created>
+               	</rewrite>
+            </eav>
 	    <radial_core_resource>
                 <class>Radial_Core_Model_Resource</class>
                 <entities>
