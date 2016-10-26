@@ -21,8 +21,18 @@ class Radial_RiskService_Sdk_Order
 {
 	/** @var string */
 	protected $_orderId;
-    /** @var Radial_RiskService_Sdk_Customer_List */
-    protected $_customerList;
+	/** @var string */
+	protected $_originalOrderId;
+	/** @var string */
+	protected $_webOrderId;
+	/** @var string */
+	protected $_referenceOrderId;
+	/** @var string */
+	protected $_orderCategory;
+	/** @var string */
+	protected $_orderModifiedBy;
+    	/** @var Radial_RiskService_Sdk_Customer_List */
+    	protected $_customerList;
 	/** @var Radial_RiskService_Sdk_Shipping_List */
 	protected $_shippingList;
 	/** @var Radial_RiskService_Sdk_Line_Items */
@@ -48,11 +58,16 @@ class Radial_RiskService_Sdk_Order
 		$this->_extractionPaths = array(
 			'setOrderId' => 'string(x:OrderId)',
 		);
-        $this->_optionalExtractionPaths = array (
-            'setPromoCode' => 'x:PromoCode',
-        );
+        	$this->_optionalExtractionPaths = array (
+            		'setPromoCode' => 'x:PromoCode',
+			'setOriginalOrderId' => 'x:OriginalOrderId',
+			'setWebOrderId' => 'x:WebOrderId',
+			'setReferenceOrderId' => 'x:ReferenceOrderId',
+			'setOrderCategory' => 'x:OrderCategory',
+			'setOrderModifiedBy' => 'x:OrderModifiedBy',
+        	);
 		$this->_subpayloadExtractionPaths = array(
-            'setCustomerList' => 'x:CustomerList',
+            		'setCustomerList' => 'x:CustomerList',
 			'setShippingList' => 'x:ShippingList',
 			'setLineItems' => 'x:LineItems',
 			'setExternalRiskResults' => 'x:ExternalRiskResults',
@@ -77,6 +92,91 @@ class Radial_RiskService_Sdk_Order
 		$this->_orderId = $orderId;
 		return $this;
 	}
+
+	/**
+         * @see Radial_RiskService_Sdk_IOrder::getOriginalOrderId()
+         */
+	public function getOriginalOrderId()
+	{
+		return $this->_originalOrderId;
+	}
+
+	/**
+         * @see Radial_RiskService_Sdk_IOrder::setOriginalOrderId()
+         */
+        public function setOriginalOrderId($orderId)
+        {
+                $this->_originalOrderId = $orderId;
+                return $this;
+        }
+
+	/**
+         * @see Radial_RiskService_Sdk_IOrder::getWebOrderId()
+         */
+        public function getWebOrderId()
+        {
+                return $this->_webOrderId;
+        }
+
+        /**
+         * @see Radial_RiskService_Sdk_IOrder::setWebOrderId()
+         */
+        public function setWebOrderId($orderId)
+        {
+                $this->_webOrderId = $orderId;
+                return $this;
+        }
+
+	/**
+         * @see Radial_RiskService_Sdk_IOrder::getReferenceOrderId()
+         */
+        public function getReferenceOrderId()
+        {
+                return $this->_referenceOrderId;
+        }
+
+	/**
+         * @see Radial_RiskService_Sdk_IOrder::setReferenceOrderId()
+         */
+        public function setReferenceOrderId($orderId)
+        {
+                $this->_referenceOrderId = $orderId;
+                return $this;
+        }
+
+	/**
+         * @see Radial_RiskService_Sdk_IOrder::getOrderCategory()
+         */
+        public function getOrderCategory()
+        {
+                return $this->_orderCategory;
+        }
+
+        /**
+         * @see Radial_RiskService_Sdk_IOrder::setOrderCategory()
+         */
+        public function setOrderCategory($orderCategory)
+        {
+                $this->_orderCategory = $orderCategory;
+                return $this;
+        }
+
+	/**
+         * @see Radial_RiskService_Sdk_IOrder::getOrderModifiedBy()
+         */
+        public function getOrderModifiedBy()
+        {
+                return $this->_orderModifiedBy;
+        }
+
+        /**
+         * @see Radial_RiskService_Sdk_IOrder::setOrderModifiedBy()
+         */
+        public function setOrderModifiedBy($orderId)
+        {
+                $this->_orderModifiedBy = $orderId;
+                return $this;
+        }
 
     /**
      * @see Radial_RiskService_Sdk_IOrder::getPromoCode()
@@ -222,6 +322,11 @@ class Radial_RiskService_Sdk_Order
 	{
 		return $this->_serializeNode('OrderId', $this->getOrderId())
 			. $this->_serializeOptionalValue('PromoCode', $this->getPromoCode())
+			. $this->_serializeOptionalValue('OriginalOrderId', $this->getOriginalOrderId())
+			. $this->_serializeOptionalValue('WebOrderId', $this->getWebOrderId())
+			. $this->_serializeOptionalValue('ReferenceOrderId', $this->getReferenceOrderId())
+			. $this->_serializeOptionalValue('OrderCategory', $this->getOrderCategory())
+			. $this->_serializeOptionalValue('OrderModifiedBy', $this->getOrderModifiedBy())
 	                . $this->getCustomerList()->serialize()
 			. $this->getShippingList()->serialize()
 			. $this->getLineItems()->serialize()
