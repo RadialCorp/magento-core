@@ -175,11 +175,14 @@ class Radial_Core_Helper_Discount
         $discounts = $discountContainer->getDiscounts();
         $data = unserialize($salesObject->getData('ebayenterprise_order_discount_data'));
 
-        foreach ($data as $loneDiscountData) {
-            $discount = $this->_fillOutTaxDiscount($discounts->getEmptyDiscount(), $loneDiscountData);
-            ;
-            $discounts[$discount] = $discount;
-        }
+	if( $data )
+	{
+        	foreach ($data as $loneDiscountData) {
+       		     $discount = $this->_fillOutTaxDiscount($discounts->getEmptyDiscount(), $loneDiscountData);
+       		     ;
+        	     $discounts[$discount] = $discount;
+        	}
+	}
 
         return $discountContainer->setDiscounts($discounts);
     }
